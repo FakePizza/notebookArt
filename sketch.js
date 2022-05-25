@@ -6,6 +6,8 @@ let lines = [];
 
 let cycle = false;
 
+let oob = false;
+
 let dotsAmount = 15
 
 
@@ -18,7 +20,6 @@ function setup() {
       cList.push([i,j]);
     }
   }
-  console.log(lines.length)
 }
 
 function draw() {
@@ -31,6 +32,12 @@ function draw() {
       circle(i,j,7);
       
     }
+  }
+  
+  if (mouseX < canScale/2 || mouseY < canScale/2 || mouseX > width - canScale/2 || mouseY > height - canScale/2){
+    oob = true;
+  } else {
+    oob = false;
   }
   
   if (cycle){
@@ -69,13 +76,14 @@ function getCircleID(){
   }
 }
 
+
 function mouseClicked(){
-  startDot = getCircleID();
-  cycle = !cycle;
-  lines.push(cList[startDot]);
-  //if (!cycle){
-    //endDot = getCircleID();
-  //}
+  if (!oob){
+    startDot = getCircleID();
+    cycle = !cycle;
+    lines.push(cList[startDot]);
+  }
+  
 }
 
 function keyTyped() {
@@ -84,3 +92,4 @@ function keyTyped() {
     lines.pop();
   }
 }
+
